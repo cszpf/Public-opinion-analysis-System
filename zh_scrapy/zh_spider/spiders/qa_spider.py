@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
 import re
-
 import scrapy
 from scrapy.crawler import CrawlerProcess
 
@@ -17,7 +16,7 @@ class QaSpider(scrapy.Spider):
 
     def start_requests(self):
         with open('./zh_spider/data/question_urls.txt', 'r') as qa_files:
-            urls = qa_files.readlines()
+            urls = qa_files.readlines()[1323:]
             for url in urls:
                 yield scrapy.Request(url=url, callback=self.parse, headers=self.headers)
 
@@ -32,7 +31,7 @@ class QaSpider(scrapy.Spider):
             question_id = str(jo_answer_item.get('question').get('id'))
             question_title = jo_answer_item.get('question').get('title')
             question_title = re.sub(r'\W', '', question_title)  # '\W' in re for not word character
-            file_url = '../data/[' + question_id + ']' + question_title + '.txt'
+            file_url = './zh_spider/data/qa_all/[' + question_id + ']' + question_title + '.txt'
             with open(file_url, 'a', encoding='utf-8') as out_file:
                 out_file.write(content + '\n\n')
 
