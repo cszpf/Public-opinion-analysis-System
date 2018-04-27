@@ -10,6 +10,8 @@
 
 zhihu_Spider.py：知乎_爬虫程序
 
+/zh_scrapy：使用scrapy的知乎爬虫代码
+
 Lda.py: LDA程序
 
 ~~jiexi.py: 对爬取下来的网页进行解析的程序~~
