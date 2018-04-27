@@ -13,7 +13,7 @@ session = requests.session()
 def get_answer(url0, qid, headers):
     global  session
     contents = []
-    for i in range(0, 1001, 10):
+    for i in range(0, 1001, 20):
         url = url0.format(qid=qid, offset=i)
         response = session.get(url, headers=headers)
         request_content = json.loads(response.text)
@@ -31,16 +31,17 @@ def get_answer(url0, qid, headers):
                 # 时间戳，自1970纪元年后经过的浮点秒数
                 # created_time = data0[j]['created_time']
                 contents.append(content)
-            time.sleep(2)
+            time.sleep(1)
         else:
             break
     return  contents
 
 qids = []
-topic_url = "https://www.zhihu.com/api/v4/topics/19608566/feeds/essence?limit=10&offset={offset}"
-question_url = 'https://www.zhihu.com/api/v4/questions/{qid}/answers?limit=10&offset={offset}&include=data[*].is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Crelevant_info%2Cquestion%2Cexcerpt%2Crelationship.is_authorized%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp&data[*].author.follower_co'
+# topic_url = "https://www.zhihu.com/api/v4/topics/19608566/feeds/essence?limit=20&offset={offset}"
+topic_url = "https://www.zhihu.com/api/v4/topics/19608566/feeds/timeline_question?limit=20&offset={offset}"
+question_url = 'https://www.zhihu.com/api/v4/questions/{qid}/answers?limit=20&offset={offset}&include=data[*].is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Crelevant_info%2Cquestion%2Cexcerpt%2Crelationship.is_authorized%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp&data[*].author.follower_co'
 # 访问"中山大学"topics
-for i in range(0, 1001, 10):
+for i in range(0, 100001, 20):
     url = topic_url.format(offset=i)
     response = session.get(url, headers=headers)
     # 查看网页是否已被正确获取
@@ -52,12 +53,12 @@ for i in range(0, 1001, 10):
         for j in range(0, len(data0)):
             target = data0[j]['target']
             # print(target.keys())
-            if 'question' not in target.keys():
+            if 'id' not in target.keys():
                 continue
-            title = target['question']['title']
+            title = target['title']
             # 匹配所有不是字母，数字，下划线，汉字的字符
             pattern = re.compile(r'\W')
-            qid = target['question']['id']
+            qid = target['id']
             title = re.sub(pattern, '', title)
             print(title)
             if qid not in qids:
@@ -65,8 +66,11 @@ for i in range(0, 1001, 10):
                 answer = get_answer(question_url, qid, headers)
                 if answer == []:
                     print('This page is error', qid)
+                    continue
                 # print('[EOS]\n' + title + '\n' + "\n".join(answer))
-                fw = open('./Setting/zhihu_HotTopics/[{id}]{title}.txt'.format(id=qid, title=title), 'wb+')
+                if not os.path.exists('./Setting1/zhihu_HotTopics'):
+                    os.makedirs('./Setting1/zhihu_HotTopics')
+                fw = open('./Setting1/zhihu_HotTopics/[{id}]{title}.txt'.format(id=qid, title=title), 'wb+')
                 result = title + '\n' + "\n".join(answer)
                 # print(result)
                 fw.write(result.encode('utf-8', 'ignore'))

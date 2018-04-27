@@ -22,7 +22,7 @@ def isNumeric(s):
 # 返回停用词列表
 def get_stopwords():
     stopwords = []
-    stop_file = os.path.join(data_dir, "stop_word.txt")
+    stop_file = os.path.join(data_dir, "stopwords.txt")
     with open(stop_file, 'rb+') as fin:
         for line in fin:
             if line.strip():
