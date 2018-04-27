@@ -16,7 +16,7 @@ class QaSpider(scrapy.Spider):
     }
 
     def start_requests(self):
-        with open('../data/question_urls.txt', 'r') as qa_files:
+        with open('./zh_spider/data/question_urls.txt', 'r') as qa_files:
             urls = qa_files.readlines()
             for url in urls:
                 yield scrapy.Request(url=url, callback=self.parse, headers=self.headers)
@@ -43,6 +43,6 @@ class QaSpider(scrapy.Spider):
             pass
 
 
-process = CrawlerProcess()
-process.crawl(QaSpider)
-process.start()  # the script will block here until the crawling is finished
+# process = CrawlerProcess()
+# process.crawl(QaSpider)
+# process.start()  # the script will block here until the crawling is finished

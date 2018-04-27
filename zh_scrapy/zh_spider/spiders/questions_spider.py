@@ -56,6 +56,6 @@ class QuestionsSpider(scrapy.Spider):
             print(cnt)
 
 
-process = CrawlerProcess()
-process.crawl(QuestionsSpider)
-process.start()  # the script will block here until the crawling is finished
+# process = CrawlerProcess()
+# process.crawl(QuestionsSpider)
+# process.start()  # the script will block here until the crawling is finished
