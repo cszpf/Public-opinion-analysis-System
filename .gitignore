@@ -1,9 +1,8 @@
-data
-
 # 保留data下这些信息
-!question_urls.txt
-!question_titles.txt
+!*data/question_urls.txt
+!*data/question_titles.txt
 
+data/
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import json
-
 import scrapy
 from scrapy.crawler import CrawlerProcess
 
@@ -45,13 +44,16 @@ class QuestionsSpider(scrapy.Spider):
             yield scrapy.Request(url=next_page_url, callback=self.parse, headers=self.headers)
 
         else:
-            print(str(len(self.qa_api_urls)) + "questions crawled")
-            with open('../data/question_urls.txt', 'w') as urls_file:
+            print(str(len(self.qa_api_urls)) + " questions crawled")
+            with open('../data/question_urls.txt', 'w', encoding='utf-8') as urls_file:
                 for url in self.qa_api_urls:
                     urls_file.write(url + '\n')
-            with open('../data/question_titles.txt', 'w') as titles_file:
+            cnt = 0
+            with open('../data/question_titles.txt', 'w', encoding='utf-8') as titles_file:
                 for title in self.qa_api_titles:
                     titles_file.write(title + '\n')
+                    cnt += 1
+            print(cnt)
 
 
 process = CrawlerProcess()
