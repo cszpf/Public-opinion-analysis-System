@@ -27,7 +27,7 @@ class QuestionsSpider(scrapy.Spider):
     def start_requests(self):
         yield scrapy.Request(url=self.questions_api_url, callback=self.parse, headers=self.headers)
 
-    def parse(self, response):
+    def all_parse(self, response):
         resp = response.text
 
         jo = json.loads(resp)
@@ -45,11 +45,11 @@ class QuestionsSpider(scrapy.Spider):
 
         else:
             print(str(len(self.qa_api_urls)) + " questions crawled")
-            with open('../data/question_urls.txt', 'w', encoding='utf-8') as urls_file:
+            with open('./zh_spider/data/question_urls.txt', 'w', encoding='utf-8') as urls_file:
                 for url in self.qa_api_urls:
                     urls_file.write(url + '\n')
             cnt = 0
-            with open('../data/question_titles.txt', 'w', encoding='utf-8') as titles_file:
+            with open('./zh_spider/data/question_titles.txt', 'w', encoding='utf-8') as titles_file:
                 for title in self.qa_api_titles:
                     titles_file.write(title + '\n')
                     cnt += 1
