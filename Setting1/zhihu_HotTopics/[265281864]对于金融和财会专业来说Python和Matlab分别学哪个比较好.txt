@@ -1,4 +1,0 @@
-对于金融和财会专业来说Python和Matlab分别学哪个比较好
-这么说吧，二者的互通性还是蛮强的，起码你回了matlab再用python的时候，会发现很顺手。
-Python 作为编程语言更通用；Matlab 更像是数学语言。要不报名 Matlab 然后自学 Python、R、VBA？技多不压身，哈哈哈。
-很笼统啊，看你想做什么岗……一般来说python是受用很多的（matlab党捂着胸口）

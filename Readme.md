@@ -14,6 +14,4 @@ zhihu_Spider.py：知乎_爬虫程序
 
 Lda.py: LDA程序
 
-~~jiexi.py: 对爬取下来的网页进行解析的程序~~
-
 fenci.py：分词的程序

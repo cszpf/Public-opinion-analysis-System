@@ -7,7 +7,7 @@ import platform
 
 sys_info = platform.system()  # 操作系统信息
 root_dir = os.getcwd()
-data_dir = os.path.join(root_dir, "Data")
+data_dir = os.path.join(root_dir, "Setting1")
 
 # dict_file = os.path.join(data_dir, "user_dict.txt")
 # jieba.load_userdict(dict_file)
@@ -26,7 +26,8 @@ def get_stopwords():
     with open(stop_file, 'rb+') as fin:
         for line in fin:
             if line.strip():
-                stopwords.append(line.strip())
+                stopwords.append(line.strip().decode('utf-8'))
+    # print(stopwords)
     return stopwords
 
 
@@ -41,31 +42,31 @@ def fenci_file(inFile, outFile):
             if line.strip():
                 line = line.strip().decode("utf-8")
                 words = list(jieba.cut(line, cut_all=False))
+                words = [word for word in words if len(word) > 1]
+                words = [word for word in words if not isNumeric(word) and word not in stopwords]
                 if words:
-                    all_words.extend(words)
-
-    # 筛词, 筛去长度为1的词,停用词,纯数字和纯英文
-    all_words = [word for word in all_words if len(word) > 1]
-    all_words = [word for word in all_words
-                 if not isNumeric(word) and word not in stopwords]
+                    all_words.append(words)
 
     with open(outFile, "wb+") as fout:
-        fout.write(" ".join(all_words).encode('utf-8', 'ignore'))
+        for word in all_words:
+            fout.write(" ".join(word).encode('utf-8', 'ignore'))
+            fout.write('\n'.encode('utf-8', 'ignore'))
 
 
 # inDir目录下每个文件分词, 存到outDir目录下
-def fenci_dir(inDir, outDir):
-    inDir = os.path.join(data_dir, inDir)
-    outDir = os.path.join(data_dir, outDir)
+def fenci_dir(inDir, outDir, pre_path=data_dir):
+    inDir = os.path.join(pre_path, inDir)
+    outDir = os.path.join(pre_path, outDir)
     # 创建outDir目录
     if not os.path.exists(outDir):
-        os.mkdir(outDir)
-
+        os.makedirs(outDir)
     for fn in os.listdir(inDir):
+        print(fn)
+        if fn.find('.txt') < 0:
+            fenci_dir(os.path.join(inDir, fn), os.path.join(outDir, fn))
+            continue
         inFile = os.path.join(inDir, fn)
         outFile = os.path.join(outDir, fn)
-
         fenci_file(inFile, outFile)
-
 
 fenci_dir(inDir="zhihu_HotTopics", outDir="zhihu_HotTopics_fenci")
