@@ -27,16 +27,45 @@ def get_cnt(word_bag):
     return pos_cnt, neg_cnt
 
 
+def question_sentiment():
+    # 以问题为主体进行情感分析
+    files_dir_url = '../Setting1/zhihu_HotTopics_fenci/'
+    topic_cnt = 7
+    out_file_url = './question_sa.txt'
+    with open(out_file_url, 'w', encoding='utf-8') as out_file:
+        for i in range(topic_cnt):
+            dir_url = files_dir_url + str(i) + '/'
+            files = os.listdir(dir_url)
+            for filename in files:
+                file_url = os.path.join(dir_url, filename)
+                with open(file_url, 'r', encoding='utf-8') as file:
+                    print(i, get_cnt(file.read().split()), filename, file=out_file)
+
+
+def answer_sentiment():
+    # 以每个答案为主体进行情感分析
+    files_dir_url = '../Setting1/zhihu_HotTopics_fenci/'
+    for i in range(7):
+        os.makedirs(str(i), exist_ok=True)
+        dir_url = files_dir_url + str(i) + '/'
+        files = os.listdir(dir_url)
+        for filename in files:
+            file_url = os.path.join(dir_url, filename)
+            with open(file_url, 'r', encoding='utf-8') as file:
+                sent_out_url = './' + str(i) + '/' + filename + '.sent.txt'
+                with open(sent_out_url, 'w', encoding='utf-8') as out_file:
+                    print(filename + '\n', file=out_file)
+                    lines = file.readlines()
+                    for line in lines:
+                        print(get_cnt(line.split()), file=out_file)
+                    out_file.write('\n\n')
+
+
 def main():
     fill_sentiment_set()
     print(len(positive_list), len(negtive_list))
-
-    files_dir_url = '../Data/zhihu_HotTopics_fenci/'
-    files = os.listdir(files_dir_url)
-    for filename in files:
-        file_url = os.path.join(files_dir_url, filename)
-        with open(file_url, 'r', encoding='utf-8') as file:
-            print(get_cnt(file.read().split()), filename)
+    # question_sentiment()
+    answer_sentiment()
 
 
 if __name__ == '__main__':
