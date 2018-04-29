@@ -7,7 +7,7 @@ import platform
 
 sys_info = platform.system()  # 操作系统信息
 root_dir = os.getcwd()
-data_dir = os.path.join(root_dir, "Setting1")
+data_dir = os.path.join(root_dir, "./Data")
 
 # dict_file = os.path.join(data_dir, "user_dict.txt")
 # jieba.load_userdict(dict_file)
@@ -69,4 +69,4 @@ def fenci_dir(inDir, outDir, pre_path=data_dir):
         outFile = os.path.join(outDir, fn)
         fenci_file(inFile, outFile)
 
-fenci_dir(inDir="zhihu_HotTopics", outDir="zhihu_HotTopics_fenci")
+fenci_dir(inDir="All_Topics", outDir="All_Topics_fenci")

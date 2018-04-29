@@ -156,8 +156,8 @@ start_time = time.time()
 path = './Data/Setting'
 if not os.path.exists(path):
     os.makedirs(path)
-infile = './Data/zhihu_HotTopics_fenci'
-prepath = path + '/zhihu_HotTopics_'
+infile = './Data/All_Topics_fenci'
+prepath = path + '/All_Topics_'
 outfile = ['Docres.pk', 'Lda.pk', 'Doc_Topic.csv', 'Word_Topic.csv']
 outfile = [prepath + i for i in outfile]
 My_LDA(infile, outfile)

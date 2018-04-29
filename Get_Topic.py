@@ -1,10 +1,10 @@
 import os
 import jieba
 import numpy as np
-INPUTFILE = './Data/Setting/zhihu_HotTopics_DOC_Topic.csv'
+INPUTFILE = './Data/Setting/All_Topics_DOC_Topic.csv'
 N_TOPIC = 10
 THREAD = round(1/N_TOPIC, 4)
-OUTPUTFILE = './Data/Setting/topic_title.txt'
+OUTPUTFILE = './Data/Setting/All_topic_title.txt'
 
 def Load_File(outfile=OUTPUTFILE, intfile=INPUTFILE, thread=THREAD):
     # titles denotes title_list
